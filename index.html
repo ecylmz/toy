@@ -1,0 +1,149 @@
+<p><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Oyuncak Makine</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body></p>
+
+<h2>Oyuncak Makine</h2>
+
+<ul>
+<li><p><strong>DİKKAT! komutları (örneğin <code>get</code> veya <code>add</code>) ilk sütundan başlayarak
+yazmayın, komutların öncesinde mutlaka bir veya daha fazla boşluk veya sekme
+bulunmalıdır.  Sadece satır etiketleri ilk sütundan başlayarak
+yazılmalıdır.</strong>  Programınızı <code>stop</code> komutuyla bitirmeyi unutmayın.</p></li>
+<li><p>Benzetim programı büyük/küçük harf ayırmaz.  "<code>#</code>" karakteriyle başlayan
+satırlar göz ardı edilir.</p></li>
+<li><p>Programı çalıştırmak için "Çalıştır" butonuna, yeni baştan çalıştırmak için
+"Baştan al" butonuna, adımlayarak çalıştırmak için "Adımla" butonuna
+tıklayın.  Adımlama sırasında bir sonraki komut görüntülenecektir.</p></li>
+<li><p><code>get</code> komutu çalıştığında girdi isteyen bir sorgulama penceresi açılacak;
+<code>print</code> komutu çalıştığında çıktı "Çıktı" pencerede görülecektir.</p></li>
+</ul>
+
+<script language="javascript" src="./turkish.js"></script>
+
+<script language="javascript" src="./toy.js"></script>
+
+<form name=f>
+    <table width=90% cellspacing="12" cellpadding="4">
+        <tr>
+            <td width=70%><fieldset>
+                <legend>Kaynak kod</legend>
+                <textarea name=src wrap=virtual style="width:100%;height:200"></textarea>
+            </fieldset></td>
+            <td width=30%><fieldset>
+                <legend>Çıktı</legend>
+                <textarea name=output wrap=virtual style="width:100%;height:200" readonly onfocus="this.blur()"></textarea>
+            </fieldset></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" value="Çalıştır" onClick='assemble(); run()'>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="Baştan al" onClick='restart()'>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Input type="button" value="Adımla" onClick='step()'>
+            </td>
+        </tr>
+    </table>
+    <table width=60% cellspacing="12" cellpadding="4">
+        <tr>
+            <td width=60% align="center" valign="top"><fieldset>
+                <legend>Bellek</legend>
+                <tt>0</tt>
+                    <input name=adr0 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val0 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>1</tt>
+                    <input name=adr1 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val1 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>2</tt>
+                    <input name=adr2 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val2 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>3</tt>
+                    <input name=adr3 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val3 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>4</tt>
+                    <input name=adr4 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val4 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>5</tt>
+                    <input name=adr5 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val5 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>6</tt>
+                    <input name=adr6 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val6 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+                <tt>7</tt>
+                    <input name=adr7 wrap=virtual style="width:60%" readonly onfocus="this.blur()" />
+                    &nbsp;&nbsp;&nbsp;
+                    <input name=val7 wrap=virtual style="width:20%" readonly onfocus="this.blur()" /><br />
+            </fieldset></td>
+            <td width=40% align="center" valign="top"><fieldset>
+                <legend>Durum</legend>
+                <fieldset>
+                    <legend>Sonraki komut</legend>
+                    <input name=pcarea wrap=virtual style="width:90%" readonly onfocus="this.blur()" ><br />
+                </fieldset>
+                <br />
+                <br />
+                <fieldset>
+                    <legend>Akümülatör</legend>
+                    <input name=accum wrap=virtual style="width:90%" readonly onfocus="this.blur()" ><br />
+                </fieldset>
+            </fieldset></td>
+        </tr>
+    </table>
+</form>
+
+<h3>Sözdizimi yardımı</h3>
+
+<pre>
+    get       klavyeden okunan girdiyi akümülatöre kaydet
+    print     akümülatör içeriğini görüntüle
+    load <i>Val</i>  akümülatöre <i>Val</i> değerini yükle
+    store <i>M</i>   akümülatör içeriğini <i>M</i> bellek adresine kaydet
+    add <i>Val</i>   akümülatör içeriğiyle <i>Val</i> değerini topla (sonuç akümülatörde)
+    mod <i>Val</i>   akümülatör içeriğiyle <i>Val</i> değerini modülüsünü al (sonuç akümülatörde)
+    sub <i>Val</i>   akümülatör içeriğinden <i>Val</i> değerini çıkar (sonuç akümülatörde)
+    mul <i>Val</i>   akümülatör içeriğiyle <i>Val</i> değerini çarp (sonuç akümülatörde)
+    div <i>Val</i>   akümülatör içeriğiyle <i>Val</i> değerini böler (sonuç akümülatörde)
+    goto <i>L</i>    <i>L</i> etiketli satıra git
+    ifpos <i>L</i>   eğer akümülatör içeriği >= 0 ise <i>L</i> etiketli satıra git
+    ifzero <i>L</i>  eğer akümülatör içeriği 0 ise <i>L</i> etiketli satıra git
+    ifneg <i>L</i>   eğe akümülatör içeriği < 0 ise <i>L</i> etiketli satıra git
+    stop      dur
+    M <i>Num</i>  M isimli bellek hücresini <i>Num</i> değeriyle ilklendir (program çalışmaya başlamadan önce)
+</pre>
+
+<p>Eğer <code>Val</code> değeri örneğin <code>17</code> gibi bir sayı ise bu değer doğrudan
+kullanılır.  Öte yandan <code>Val</code> değeri <code>Sum</code> gibi bir dizgi ise, bu dizgi
+bir bellek hücresini temsil eder.  Dolayısıyla <code>add Sum</code> gibi bir satır
+<code>Sum</code> olarak etiketlenen bellek hücresiyle akümülatör içeriğini toplayacak
+ve sonucu yine akümülatöre yazacaktır.  Bu işlem sonucunda <code>Sum</code> etiketli
+bellek hücresinin içeriği değişmeyecektir.  Benzer şekilde <code>add 1</code> gibi bir
+satır akümülatörün içeriğine <code>1</code> ekleyecektir.</p>
+
+<p>Örnek bir program için lütfen <a href="ornek/sortopla.t"
+type="text/html">tıklayın</a>.  Bu program, klavyeden okunan sayıları
+toplamakta ve 0 değeri girildiğinde sonucu görüntülemektedir.</p>
+
+<h3>Benzetim programı hakkında</h3>
+
+<p>Bu program orijinal haliyle Princeton'da verilen <a href="http://www.cs.princeton.edu/courses/archive/fall09/cos109/">Computers in Our
+World</a> dersinde
+Merkezi İşlem Biriminin nasıl çalıştığını anlatmak amacıyla <a href="http://en.wikipedia.org/wiki/Brian_Kernighan">Brian
+Kernighan</a> tarafından yazılmış,
+Recai Oktaş ve Nurettin Şenyer tarafından fazlasıyla kurcalanmıştır.  Benzetim
+programının nasıl çalıştığını anlamak için <a href="toy.js">kaynak koda</a> bakmak
+isteyebilirsiniz.  Bu sürümde, hatalı bir program yazdığınızda benzetim
+programının sonsuz döngüye girmemesi için en fazla 1000 satırdan oluşan
+programlar yazabilirsiniz.  Adımlama sürümünde böyle bir kısıtlama yoktur.</p>
+
+<p></body></p>
