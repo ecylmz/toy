@@ -1,5 +1,5 @@
 HOW_MANY_VARIABLE_SHOWED = 8;
-INSTRUCTION_LIMIT = 5000;
+INSTRUCTION_LIMIT = 10000;
 
 label = new Object();
 opcode = new Object();
